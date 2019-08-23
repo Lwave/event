@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript">
+        /*
+        分析：
+          1.给开始按钮绑定单击事件
+            1.定义循环定时器
+            2.切换小像框的src属性
+               定义数组，存放图片资源路径
+               生成随机数，数组索引
+          2.给结束按钮绑定单击事件
+             1.停止定时器
+             2.给大相框设置src属性
+        */
+        var imgs = ["image/img00.jpg",
+            "image/img01.jpg",
+            "image/img02.jpg",
+            "image/img03.jpg",
+            "image/img04.jpg",
+            "image/img05.jpg",
+            "image/img06.jpg",
+            "image/img07.jpg",
+            "image/img08.jpg",
+            "image/img09.jpg",
+            "image/img10.jpg",
+            "image/img11.jpg",
+            "image/img12.jpg",
+            "image/img13.jpg",
+            "image/img14.jpg",
+            "image/img15.jpg",
+            "image/img16.jpg",
+            "image/img17.jpg",
+            "image/img18.jpg",
+            "image/img19.jpg",
+            "image/img20.jpg",
+            "image/img21.jpg"
+        ];
+        var startId;//开始定时器的id
+        var index;//随机角标
+        //入口函数
+        $(function () {
+            //处理按钮是否可以使用的效果
+            $("#startID").prop("disabled", false);
+            $("#stopID").prop("disabled", true);
+            //给开始按钮绑定单击事件
+            $("#startID").click(function () {
+                //  1.定义循环定时器,20毫秒执行一次
+                $("#startID").prop("disabled", true);
+                $("#stopID").prop("disabled", false);
+
+                startId = setInterval(function () {
+                    //生成随机角标0-21
+                    index = Math.floor(Math.random() * 22); //0.000-0.999----->0.0-21.987
+                    //设置小像框的src属性
+                    $("#img1Id").prop("src", imgs[index]);
+                }, 20);
+            });
+
+            //给结束按钮绑定单击事件
+            $("#stopID").click(function () {
+                $("#startID").prop("disabled", false);
+                $("#stopID").prop("disabled", true);
+
+                //停止定时器
+                clearInterval(startId);
+                //给大像框设置属性
+                $("#img2Id").prop("src", imgs[index]).hide();
+                //大像框1.5秒之后显示
+                $("#img2Id").show(1500);
+            });
+        });
+    </script>
+</head>
+<body style="background-color: beige">
+<h1 style="color: gray;">抽奖啦！好礼大放送！</h1>
+<!--小像框-->
+<div style="border-style: dotted;width: 160px;height: 100px;margin-top: 20px">
+    <img id="img1Id" style="width: 160px;height: 100px">
+</div>
+<!--大像框-->
+<div style="border-style: double;width:800px;height:600px;position: absolute;left: 500px;top:29px;">
+    <img id="img2Id" style="width: 800px;height: 600px">
+</div>
+<!--开始按钮-->
+<input
+        id="startID"
+        type="button"
+        value="点击开始"
+        style="width: 150px;height: 150px;font-size: 22px;margin-top: 20px;border-radius: 50px;border: white"
+>
+<!--停止按钮-->
+<input
+        id="stopID"
+        type="button"
+        value="点击停止"
+        style="width: 150px;height: 150px;font-size: 22px;border-radius: 50px;border: white"
+>
+</body>
+</html>
